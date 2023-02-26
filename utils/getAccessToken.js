@@ -4,7 +4,7 @@ const path = require('path')
 const fileName = path.resolve(__dirname, './access_token.json')
 
 const APPID = 'wxe2b9f81f0d7f5eed'
-const APPSECRET = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+const APPSECRET = '7edec8e6dbb62c0bde5503fccf6230fa'
 const URL = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${APPSECRET}`
 
 /**
@@ -39,7 +39,7 @@ const getAccessToken = async () => {
     const readObj = JSON.parse(readRes)
     const createTime = new Date(readObj.createTime).getTime()
     const nowTime = new Date().getTime()
-    if ((nowTime - createTime) / 1000 / 60 / 60 >= 2) {
+    if ((nowTime - createTime) / 1000 / 60 / 60 >= 2 || !readObj.access_token) {
       await updateAccessToken()
       await getAccessToken()
     }
