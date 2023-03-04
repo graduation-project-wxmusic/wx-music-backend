@@ -46,4 +46,14 @@ router.post('/updatePlaylist', async (ctx, next) => {
   }
 })
 
+router.get('/del', async (ctx, next) => {
+  const params = ctx.request.query
+  const query = `db.collection('playlist').doc('${params.id}').remove()`
+  const res = await callCloudDB(ctx, 'databasedelete', query)
+  ctx.body = {
+    code: 20000,
+    data: res.data,
+  }
+})
+
 module.exports = router
