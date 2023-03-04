@@ -1,6 +1,7 @@
 const Koa = require('koa')
 const Router = require('koa-router')
 const cors = require('koa2-cors')
+const { koaBody } = require('koa-body')
 const app = new Koa()
 const router = new Router()
 
@@ -15,6 +16,10 @@ app.use(cors({
 /**
  * 全局中间件
  */
+
+// 接收post参数解析
+app.use(koaBody())
+
 const ENV = 'cloud1-8gde89ykd7916df3'
 app.use(async (ctx, next) => {
   ctx.state.env = ENV

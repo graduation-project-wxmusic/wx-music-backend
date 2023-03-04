@@ -4,7 +4,7 @@ const path = require('path')
 const fileName = path.resolve(__dirname, './access_token.json')
 
 const APPID = 'wxe2b9f81f0d7f5eed'
-const APPSECRET = '7edec8e6dbb62c0bde5503fccf6230fa'
+const APPSECRET = '69460cd3c2a737c331b69b803ce29c55'
 const URL = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${APPSECRET}`
 
 /**
