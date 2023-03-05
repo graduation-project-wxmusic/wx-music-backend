@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const multer = require('@koa/multer') 
 const router = new Router()
 const callCloudDB = require('../utils/callCloudDB.js')
 const cloudStorage = require('../utils/callCloudStorage.js')
@@ -28,6 +29,23 @@ router.get('/list', async (ctx, next) => {
   ctx.body = {
     code: 20000,
     data: returnData
+  }
+})
+
+router.post('/upload', multer().single('file'), async (ctx, next) => {
+  const fileid = await cloudStorage.upload(ctx)
+  // 写数据库
+  const query = `
+       db.collection('swiper').add({
+           data: {
+               fileid: '${fileid}'
+           }
+       })
+   `
+  const res = await callCloudDB(ctx, 'databaseadd', query)
+  ctx.body = {
+    code: 20000,
+    id_list: res.data.id_list
   }
 })
 
