@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const multer = require('@koa/multer') 
+const multer = require('@koa/multer')
 const router = new Router()
 const callCloudDB = require('../utils/callCloudDB.js')
 const cloudStorage = require('../utils/callCloudStorage.js')
@@ -46,6 +46,23 @@ router.post('/upload', multer().single('file'), async (ctx, next) => {
   ctx.body = {
     code: 20000,
     id_list: res.data.id_list
+  }
+})
+
+router.get('/del', async (ctx, next) => {
+  const params = ctx.request.query
+  // 删除云数据库中的内容
+  const query = `db.collection('swiper').doc('${params._id}').remove()`
+  const delDBRes = await callCloudDB(ctx, 'databasedelete', query)
+  // 删除云存储中的文件
+  const delStorageRes = await cloudStorage.delete(ctx, [params.fileid])
+  console.log(delDBRes.data, delStorageRes);
+  ctx.body = {
+    code: 20000,
+    data: {
+      delDBRes: delDBRes.data,
+      delStorageRes,
+    }
   }
 })
 

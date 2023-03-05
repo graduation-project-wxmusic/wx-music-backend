@@ -59,6 +59,19 @@ const cloudStorage = {
     // })
     return info.file_id
   },
+
+  async delete(ctx, fileid_list) {
+    const ACCESS_TOKEN = await getAccessToken()
+    const res = await axios({
+      method: 'POST',
+      url: `https://api.weixin.qq.com/tcb/batchdeletefile?access_token=${ACCESS_TOKEN}`,
+      data: {
+        env: ctx.state.env,
+        fileid_list: fileid_list
+      },
+    })
+    return res.data
+  }
 }
 
 module.exports = cloudStorage
