@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 tests/**/coverage/
+APPSECRET
+access_token.json
 
 # Editor directories and files
 .idea
